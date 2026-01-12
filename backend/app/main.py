@@ -33,6 +33,10 @@ async def detect_objects(file: UploadFile = File(...)):
         "products": product_boxes
     }
     
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+    
 @app.get("/")
 async def root():
     return {"message": "API is running"}
