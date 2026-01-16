@@ -1,12 +1,15 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException, Body
+from fastapi import FastAPI, File, UploadFile, HTTPException, Body, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 import cv2
 import numpy as np
+import json
 
 
 from app.model import run_detection
 from app.calc import compute_mm_per_pixel, calculate_product_dimensions
+from app.gemini import get_packaging_advice
+
 
 app = FastAPI(title="Smart Packaging Detection API")
 
@@ -17,6 +20,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.post("/packaging-advice")
+async def ai_packaging_advice(
+    image: UploadFile = File(...),
+    fefco_standards: str = Form(...)
+):
+    image_bytes = await image.read()
+    fefco_list = json.loads(fefco_standards)
+
+    result = get_packaging_advice(image_bytes, fefco_list)
+
+    return {
+        "ai_response": result
+    }
 
 @app.post("/detect")
 async def detect_objects(file: UploadFile = File(...)):
