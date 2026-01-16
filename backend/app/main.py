@@ -1,12 +1,22 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, Body
+from fastapi.middleware.cors import CORSMiddleware
+
 import cv2
 import numpy as np
+
 
 from app.model import run_detection
 from app.calc import compute_mm_per_pixel, calculate_product_dimensions
 
 app = FastAPI(title="Smart Packaging Detection API")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all origins (dev only)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/detect")
 async def detect_objects(file: UploadFile = File(...)):
