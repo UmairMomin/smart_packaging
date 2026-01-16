@@ -35,10 +35,8 @@ async def detect_objects(file: UploadFile = File(...)):
         "success": True,
         "message": "Reference object detected",
     }
-<<<<<<< HEAD
 
 
-=======
     
     
 @app.post("/calculate-dimensions")
@@ -76,7 +74,6 @@ def calculate_dimensions(payload: dict = Body(...)):
             detail=str(e)
         )
     
->>>>>>> 69e6ec1a4db2aa06373983711c4ecafa89251d9c
 @app.get("/health")
 def health():
     return {
