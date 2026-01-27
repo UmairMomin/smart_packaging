@@ -38,7 +38,10 @@ async def ai_packaging_advice(
 @app.post("/detect")
 async def detect_objects(file: UploadFile = File(...)):
     if not file.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Invalid image file", success=False)
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid image file"
+        )
 
     image_bytes = await file.read()
     image_np = np.frombuffer(image_bytes, np.uint8)
@@ -46,25 +49,49 @@ async def detect_objects(file: UploadFile = File(...)):
 
     if image is None:
         raise HTTPException(
-            status_code=400, detail="Image could not be decoded", success=False
+            status_code=400,
+            detail="Image could not be decoded"
         )
 
     reference_box, product_boxes = run_detection(image)
 
+    # -------- CASE HANDLING --------
+
+    # Case 4: Nothing detected
+    if reference_box is None and not product_boxes:
+        return {
+            "reference_object": None,
+            "products": [],
+            "success": False,
+            "message": "No reference object or products detected"
+        }
+
+    # Case 2: Reference missing
     if reference_box is None:
         return {
             "reference_object": None,
             "products": product_boxes,
-            "message": "Reference object not detected",
             "success": False,
+            "message": "Reference object not detected"
         }
 
+    # Case 3: Products missing
+    if not product_boxes:
+        return {
+            "reference_object": reference_box,
+            "products": [],
+            "success": False,
+            "message": "No products detected"
+        }
+
+    # Case 1: Both detected
     return {
         "reference_object": reference_box,
         "products": product_boxes,
         "success": True,
-        "message": "Reference object detected",
+        "message": "Reference object and products detected"
     }
+
 
 
 @app.post("/calculate-dimensions")

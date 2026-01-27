@@ -21,7 +21,7 @@ def run_detection(image: np.ndarray):
 
     results = model.predict(
         image,
-        conf=0.6,
+        conf=0.5,
         imgsz=640,
         verbose=False
     )
