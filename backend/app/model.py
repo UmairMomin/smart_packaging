@@ -7,7 +7,8 @@ CLASS_ID_PRODUCT = 0
 CLASS_ID_REFERENCE = 1
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL_PATH = os.path.join(BASE_DIR, "models", "best_tight_boxes.pt")
+# MODEL_PATH = os.path.join(BASE_DIR, "models", "best_tight_boxes.pt")
+MODEL_PATH = os.path.join(BASE_DIR, "models", "best_synt.pt")
 
 model = YOLO(MODEL_PATH)
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
