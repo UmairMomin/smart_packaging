@@ -1,0 +1,86 @@
+# ==========================================
+# Python & Jupyter
+# ==========================================
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+**/_*.ipynb
+.ipynb_checkpoints
+
+# ==========================================
+# Large ML Models & Datasets
+# ==========================================
+# Ignore model weight files globally (avoids GitHub 100MB push limit, e.g. best.pt)
+*.pt
+*.onnx
+*.engine
+*.weights
+*.h5
+*.pkl
+*.pb
+
+# Allow backend/models/best_synt.pt since it's already tracked and small,
+# but ignore other large models
+!backend/models/best_synt.pt
+
+# YOLO/Ultralytics run outputs
+runs/
+**/runs/
+
+# Datasets, Caches, and Plots
+**/dataset/
+**/plots/
+*.cache
+
+# ==========================================
+# Auto-generated Outputs & Caches
+# ==========================================
+backend/output/*
+# Keep the directory structure but ignore contents
+!backend/output/.gitkeep
+
+# ==========================================
+# OS & Editor Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.env
+
+# ==========================================
+# Node / Frontend Caches
+# ==========================================
+node_modules/
+.next/
+out/
+dist/
+build/
+*.egg-info/
+.cache/
+
+# ==========================================
+# Logs
+# ==========================================
+*.log
+logs/
